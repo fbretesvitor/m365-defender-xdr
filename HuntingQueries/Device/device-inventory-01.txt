@@ -1,0 +1,6 @@
+DeviceInfo
+| mv-expand ParsedFields=parse_json(LoggedOnUsers)
+| extend CUserName=tostring(ParsedFields.UserName)
+| extend CDomainName=tostring(ParsedFields.DomainName)
+| summarize arg_max(Timestamp, *) by DeviceId
+| project DeviceId, LastPing=Timestamp, DeviceName, DeviceType, JoinType, CUserName, CDomainName, OnboardingStatus 

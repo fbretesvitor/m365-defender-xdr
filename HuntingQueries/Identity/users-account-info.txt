@@ -1,0 +1,3 @@
+IdentityInfo
+| summarize arg_max(AccountUpn, *) by AccountObjectId
+| project AccountObjectId, AccountUpn, GivenName, Surname, AccountDisplayName, Department, JobTitle, AccountName, AccountDomain, City, Country, IsAccountEnabled

@@ -1,0 +1,8 @@
+DeviceTvmSoftwareVulnerabilities
+| extend tostring(mv = strcat(SoftwareVendor, " - ", SoftwareName, " - ", SoftwareVersion))
+| summarize TotVuln=dcount(CveId) by mv
+| extend var=split(mv, " - ")
+| mv-expand Custom_SoftwareVendor=var[0], Custom_SoftwareName=var[1], Custom_SoftwareVersion=var[2]
+| project-away mv, var
+| project Custom_SoftwareVendor, Custom_SoftwareName, Custom_SoftwareVersion, TotVuln
+| order by tostring(Custom_SoftwareVendor) asc

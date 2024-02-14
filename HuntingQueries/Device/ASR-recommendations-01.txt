@@ -1,0 +1,7 @@
+let ConfigDesc = DeviceTvmSecureConfigurationAssessmentKB | project ConfigurationId, ConfigurationName;
+DeviceTvmSecureConfigurationAssessment
+| where Timestamp > ago(30d)
+| where IsApplicable == 1
+| join kind=leftouter ConfigDesc on ConfigurationId
+| summarize TotalDevices=count(), ExposedDevices=countif(IsCompliant == 0) by ConfigurationId, ConfigurationName
+| project ConfigurationId, ConfigurationName, ExposedDevices, TotalDevices
